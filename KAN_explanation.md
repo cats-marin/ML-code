@@ -5,15 +5,16 @@
 
 <!-- ## TL;DR: This KAN implementation achieves orders-of-magnitude faster training, improved conditioning, and better generalization by reparameterizing linear B-splines into cumulative ReLU-based splines and leveraging parallel scan and lookup-based interpolation. -->
 
-## TL;DR: This KAN implementation achieves orders-of-magnitude faster training and better generalization by reparameterizing linear B-splines into cumulative ReLU-based splines and leveraging parallel scan and lookup-based interpolation.
+<!-- ## TL;DR: This KAN implementation achieves orders-of-magnitude faster training and better generalization by reparameterizing linear B-splines into cumulative ReLU-based splines and leveraging parallel scan and lookup-based interpolation. -->
+
+<!-- ### TL;DR: This KAN implementation achieves orders-of-magnitude faster training and better generalization by reparameterizing linear B-splines into cumulative ReLU-based splines. Training is accelerated via leveraging parallel scan for reparameterization and fast interpolation via parameter lookup between the two nearest basis functions. -->
 
 <!-- ## TL;DR: This KAN implementation improves training speed by orders of magnitude, along with better conditioning and generalization, by reparameterizing linear B-splines into cumulative ReLU-based splines and using parallel scan and lookup-based interpolation. -->
  
-This implementation of KAN uses a linear (C⁰) spline, with uniformly spaced control points (see Figure 1).
+## TL;DR: This KAN implementation achieves orders of magnitude faster training and better generalization by reparameterizing B-splines into cumulative ReLU splines and leveraging parallel scan and lookup-based interpolation.
 
-To improve the conditioning of the optimization problem, the spline is reparameterized from the original B-spline basis (see Equation 1), which has strictly local support, to a cumulative ReLU-based spline formulation (see Equation 2). In this formulation, each parameter contributes via a ReLU term with support extending in one direction from its associated breakpoint b<sub>l</sub>, yielding semi-global influence. 
 
-This reparameterization is implemented via a parallel scan (prefix sum) with O(log N) time complexity, where N is the number of parameters, independent of batch size. Training speed was further improved by orders of magnitude by exploiting the fact that under the linear basis spline formulation, spline(x) can be efficiently calculated by looking up the parameters of the two nearest linear bases and linearly interpolating between them, rather than summing all over bases.
+This implementation of KAN uses a linear (C⁰) spline, with uniformly spaced control points (see Figure 1). To improve the conditioning of the optimization problem, the spline is reparameterized from the original B-spline basis (see Equation 1), which has strictly local support, to a cumulative ReLU-based spline formulation (see Equation 2). In this formulation, each parameter contributes via a ReLU term with support extending in one direction from its associated breakpoint b<sub>l</sub>, yielding semi-global influence. This reparameterization is implemented via a parallel scan (prefix sum) with O(log N) time complexity, where N is the number of parameters, independent of batch size. Training speed was further improved by orders of magnitude by exploiting the fact that under the linear basis spline formulation, spline(x) can be efficiently calculated by looking up the parameters of the two nearest linear bases and linearly interpolating between them, rather than summing over all basis functions.
 
 ### Short Thoughts
 - KAN suffers from training difficulties, which includes the training speed and the ill-conditioning of solution space
@@ -49,3 +50,4 @@ This reparameterization is implemented via a parallel scan (prefix sum) with O(l
 - Add ReLU spline figure
 - Add gifs or videos showing the training process with and without reparameterization
 - Add the steps to go from ReLU-spline formulation to prefix-sum
+- Revisit the writing to be more polished later
